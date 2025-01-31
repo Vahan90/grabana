@@ -12,7 +12,6 @@ import (
 	"github.com/K-Phoen/grabana/row"
 	"github.com/K-Phoen/grabana/stat"
 	"github.com/K-Phoen/grabana/table"
-	"github.com/K-Phoen/grabana/target/cloudwatch"
 	"github.com/K-Phoen/grabana/target/prometheus"
 	"github.com/K-Phoen/grabana/text"
 	"github.com/K-Phoen/grabana/timeseries"
@@ -168,24 +167,6 @@ func main() {
 			row.WithText(
 				"Some awesome html?",
 				text.HTML("Some awesome html?"),
-			),
-		),
-		dashboard.Row(
-			"Cloudwatch",
-			row.WithTimeSeries(
-				"test",
-				timeseries.WithCloudwatchTarget(
-					cloudwatch.QueryParams{
-						Dimensions: map[string]string{
-							"QueueName": "test-queue",
-						},
-						MetricName: "NumberOfMessagesReceived",
-						Statistics: []string{"Sum"},
-						Namespace:  "AWS/SQS",
-						Period:     "30",
-						Region:     "default",
-					},
-				),
 			),
 		),
 	)
