@@ -39,11 +39,11 @@ func main() {
 			"Cloudwatch",
 			row.WithTimeSeries(
 				"test",
-				timeseries.DataSource("PA0E5A850ABBBEAC7"),
+				timeseries.DataSource("AWS CloudWatch"),
 				timeseries.WithCloudwatchTarget(
 					cloudwatch.QueryParams{
 						Dimensions: map[string]string{
-							"DBClusterIdentifier": "random-name",
+							"DBClusterIdentifier": "RDS-Cluster-Name",
 						},
 						MetricName: "CPUUtilization",
 						Statistics: []string{"Maximum"},
@@ -61,6 +61,7 @@ func main() {
 	}
 
 	dash, err := client.UpsertDashboard(ctx, folder, builder)
+
 	if err != nil {
 		fmt.Printf("Could not create dashboard: %s\n", err)
 		os.Exit(1)
