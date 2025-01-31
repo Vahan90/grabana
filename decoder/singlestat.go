@@ -170,6 +170,9 @@ func (singleStatPanel DashboardSingleStat) target(t Target) (singlestat.Option, 
 	if t.InfluxDB != nil {
 		return singlestat.WithInfluxDBTarget(t.InfluxDB.Query, t.InfluxDB.toOptions()...), nil
 	}
+	if t.Cloudwatch != nil {
+		return singlestat.WithCloudwatchTarget(t.Cloudwatch.QueryParams, t.Cloudwatch.toOptions()...), nil
+	}
 	if t.Stackdriver != nil {
 		stackdriverTarget, err := t.Stackdriver.toTarget()
 		if err != nil {

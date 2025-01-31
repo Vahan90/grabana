@@ -194,6 +194,9 @@ func (gaugePanel DashboardGauge) target(t Target) (gauge.Option, error) {
 	if t.InfluxDB != nil {
 		return gauge.WithInfluxDBTarget(t.InfluxDB.Query, t.InfluxDB.toOptions()...), nil
 	}
+	if t.Cloudwatch != nil {
+		return gauge.WithCloudwatchTarget(t.Cloudwatch.QueryParams, t.Cloudwatch.toOptions()...), nil
+	}
 	if t.Stackdriver != nil {
 		stackdriverTarget, err := t.Stackdriver.toTarget()
 		if err != nil {

@@ -217,6 +217,9 @@ func (graphPanel *DashboardGraph) target(t Target) (graph.Option, error) {
 	if t.InfluxDB != nil {
 		return graph.WithInfluxDBTarget(t.InfluxDB.Query, t.InfluxDB.toOptions()...), nil
 	}
+	if t.Cloudwatch != nil {
+		return graph.WithCloudwatchTarget(t.Cloudwatch.QueryParams, t.Cloudwatch.toOptions()...), nil
+	}
 	if t.Stackdriver != nil {
 		stackdriverTarget, err := t.Stackdriver.toTarget()
 		if err != nil {

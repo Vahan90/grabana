@@ -183,6 +183,11 @@ func (timeseriesPanel DashboardTimeSeries) target(t Target) (timeseries.Option, 
 	if t.Loki != nil {
 		return timeseries.WithLokiTarget(t.Loki.Query, t.Loki.toOptions()...), nil
 	}
+
+	if t.Cloudwatch != nil {
+		return timeseries.WithCloudwatchTarget(t.Cloudwatch.QueryParams, t.Cloudwatch.toOptions()...), nil
+	}
+
 	if t.Stackdriver != nil {
 		stackdriverTarget, err := t.Stackdriver.toTarget()
 		if err != nil {

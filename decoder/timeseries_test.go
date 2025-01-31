@@ -4,9 +4,11 @@ import (
 	"testing"
 
 	"github.com/K-Phoen/grabana/dashboard"
+	"github.com/K-Phoen/grabana/target/cloudwatch"
 	"github.com/K-Phoen/grabana/timeseries"
 	"github.com/K-Phoen/grabana/timeseries/axis"
 	"github.com/K-Phoen/sdk"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -490,6 +492,27 @@ func TestTimeSeriesAxisSupportsScale(t *testing.T) {
 			req.Equal(tc.expectedLog, tsPanel.Builder.TimeseriesPanel.FieldConfig.Defaults.Custom.ScaleDistribution.Log)
 		})
 	}
+}
+
+func TestTimeSeriesCloudwatchTarget(t *testing.T) {
+	panel := DashboardTimeSeries{
+		Title: "Timeseries target test",
+		Targets: []Target{
+			{
+				Cloudwatch: &CloudwatchTarget{
+					QueryParams: cloudwatch.QueryParams{
+						Dimensions: map[string]string{
+							"Name": "test",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	option, err := panel.target(panel.Targets[0])
+	assert.NoError(t, err)
+	assert.NotNil(t, option)
 }
 
 func TestTimeSeriesAxisRejectsInvalidScale(t *testing.T) {

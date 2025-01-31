@@ -246,6 +246,9 @@ func (statPanel DashboardStat) target(t Target) (stat.Option, error) {
 	if t.InfluxDB != nil {
 		return stat.WithInfluxDBTarget(t.InfluxDB.Query, t.InfluxDB.toOptions()...), nil
 	}
+	if t.Cloudwatch != nil {
+		return stat.WithCloudwatchTarget(t.Cloudwatch.QueryParams, t.Cloudwatch.toOptions()...), nil
+	}
 	if t.Stackdriver != nil {
 		stackdriverTarget, err := t.Stackdriver.toTarget()
 		if err != nil {
